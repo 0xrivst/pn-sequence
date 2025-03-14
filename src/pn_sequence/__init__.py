@@ -2,6 +2,7 @@
 This module contains the functions for testing pseudo-noise (PN) sequences according to Golomb's randomness postulates.
 """
 
+
 def is_first_postulate_true(sequence):
     """Tests whether the sequence satisfies the first postulate
 
@@ -20,6 +21,7 @@ def is_first_postulate_true(sequence):
         return False
 
     return True
+
 
 def is_second_postulate_true(sequence):
     """Tests whether the sequence satisfies the second postulate
@@ -80,11 +82,7 @@ def is_pn_sequence(sequence):
         bool: Whether the sequence is a pseudo-noise (pn) sequence.
 
     """
-    if (
-        is_first_postulate_true(sequence)
-        and is_second_postulate_true(sequence)
-        and is_third_postulate_true(sequence)
-    ):
+    if is_first_postulate_true(sequence) and is_second_postulate_true(sequence) and is_third_postulate_true(sequence):
         return True
 
     return False
