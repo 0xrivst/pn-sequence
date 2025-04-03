@@ -36,18 +36,26 @@ def is_second_postulate_true(sequence):
         bool: Whether the sequence satisfies the second postulate
     """
     streaks = __get_streaks(sequence)
-    strnum = list(streaks)
+    if not streaks:
+        return False
+    
+    total_runs = sum(len(indices) for indices in streaks.values())
+    if total_runs < 2:
+        return False
 
-    if streaks:
-        for i in range(0, len(strnum) - 1):
-            if abs(strnum[i] - strnum[i + 1]) != 1:
-                return False
-            if len(streaks[strnum[i]]) != 2 * len(streaks[strnum[i + 1]]):
-                if len(streaks[strnum[i]]) != 1 and len(streaks[strnum[i + 1]]) != 1:
-                    return False
-        return True
+    streak_lengths = sorted(streaks.keys())
 
-    return False
+    for i, length in enumerate(streak_lengths):
+        expected_min_frequency = total_runs / (2 ** length)
+        actual_frequency = len(streaks[length])
+        
+        if expected_min_frequency < 1:
+            break
+            
+        if actual_frequency < expected_min_frequency:
+            return False
+    
+    return True
 
 
 def is_third_postulate_true(sequence):
@@ -62,13 +70,15 @@ def is_third_postulate_true(sequence):
         bool: Whether the sequence satisfies the second postulate
     """
     sequence2 = sequence[1:] + sequence[:1]
-    hamm_dist = _hamming_distance(sequence, sequence2)
-
-    for i in range(2, len(sequence) - 1):
-        sequence2 = sequence[i:] + sequence[:i]
-        if hamm_dist != _hamming_distance(sequence, sequence2):
+    shift1_distance = _hamming_distance(sequence, sequence2)
+    
+    for shift in range(2, len(sequence)):
+        shifted_seq = sequence[shift:] + sequence[:shift]
+        distance = _hamming_distance(sequence, shifted_seq)
+        
+        if distance != shift1_distance:
             return False
-
+    
     return True
 
 
@@ -90,29 +100,29 @@ def is_pn_sequence(sequence):
 
 def __get_streaks(sequence):
     streaks = {}
-    streak = 1
-    i = 0
+    normalized_seq = sequence
 
-    while sequence[0] == sequence[len(sequence) - 1]:
-        if i > len(sequence):
+    rotation_index = 0
+    while rotation_index < len(sequence):
+        if normalized_seq[0] != normalized_seq[-1]:
+            break
+        
+        normalized_seq = normalized_seq[1:] + normalized_seq[0]
+        rotation_index += 1
+        if rotation_index >= len(sequence):
             return {}
-        sequence = sequence[1:] + sequence[0]
-        i += 1
+    
+    normalized_seq += '1' if normalized_seq[0] == '0' else '0'
 
-    if sequence[len(sequence) - 1] == "1":
-        sequence += "0"
-    else:
-        sequence += "1"
-
-    for i in range(0, len(sequence) - 1):
-        if sequence[i] == sequence[i + 1]:
-            streak += 1
+    current_streak = 1
+    for i in range(0, len(normalized_seq)):
+        if normalized_seq[i] == normalized_seq[i-1]:
+            current_streak += 1
         else:
-            try:
-                streaks[streak].append(i)
-            except:
-                streaks[streak] = [i]
-            streak = 1
+            if current_streak not in streaks:
+                streaks[current_streak] = []
+            streaks[current_streak].append(i-1)
+            current_streak = 1
 
     return streaks
 
