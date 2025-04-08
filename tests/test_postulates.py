@@ -2,8 +2,11 @@ from pn_sequence import is_first_postulate_true, is_second_postulate_true, is_th
 
 SEQUENCE = "011001000111100111"
 PN_SEQUENCES = [
+    "0001011",
+    "0011101",
     "011001000111101",
     "111100010011010",
+    "000100110101111",
     "0000100101100111110001101110101"
 ]
 

@@ -67,7 +67,7 @@ def is_third_postulate_true(sequence):
     Args:
         sequence: A string with a binary sequence to be tested.
     Returns:
-        bool: Whether the sequence satisfies the second postulate
+        bool: Whether the sequence satisfies the third postulate
     """
     sequence2 = sequence[1:] + sequence[:1]
     shift1_distance = _hamming_distance(sequence, sequence2)
