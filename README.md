@@ -44,15 +44,15 @@ Contributions are welcome. Please fork the project and use feature a feature bra
 
 The project is licensed under the GNU Lesser General Public License. See [LICENSE](/LICENSE) for full terms.
 
-## Pseudo-Noise (PN) sequences
+## Golomb's randomness postulates
 
-## Golomb's Postulates
+Golomb's randomness postulates describe properties that can be found in a random sequence. A periodic binary sequence that satisfies all three postulates is a pseudo-noise (PN) or pseudo-random sequence -- it has noise-like properties and appears random, even though it was generated deterministically. PN sequences can be used for various applications, including signal synchronization, navigation, radar ranging, random number generation, spread-spectrum communications, and cryptography (Helleseth and Kumar, 1999).
 
-Take sequence `0011101`.
+E.g.: Take sequence `0011101`.
 
 ### Postulate 1
 
-> In the cycle s^N of s, the number of 1's differs from the number of 0's by at most 1 (Menezes, Van Oorschot and Vanstone, 2018)
+_In the cycle s^N of s, the number of 1's differs from the number of 0's by at most 1 (Menezes, Van Oorschot and Vanstone, 2018)_
 
 Count 1's and 0's:
 
@@ -71,7 +71,7 @@ The first postulate is satisfied.
 
 ### Postulate 2
 
-> In the cycle, at least half the runs have length 1, at least one-fourth have length 2, at least one-eighth have length 3, etc., as long as the number of runs so indicated exceeds 1. (Menezes, Van Oorschot and Vanstone, 2018)
+_In the cycle, at least half the runs have length 1, at least one-fourth have length 2, at least one-eighth have length 3, etc., as long as the number of runs so indicated exceeds 1. (Menezes, Van Oorschot and Vanstone, 2018)_
 
 Mark and count runs:
 
@@ -114,11 +114,9 @@ All runs pass the requirement. The second postulate is satisfied.
 
 ### Postulate 3
 
-> The autocorrelation function C(t) is two-valued. (Menezes, Van Oorschot and Vanstone, 2018)
+_The autocorrelation function C(t) is two-valued. (Menezes, Van Oorschot and Vanstone, 2018)_
 
-This postulate can be validated by calculating Hamming distance of cyclic shifts in the sequence.
-
-For `H(0)=0` (zero shift, Hamming distance is zero), the autocorrelation value is `C(0) = n`. This gives the first autocorrelation value. For all other cyclic shifts, Hamming distance must be constant.
+In other words, when the sequence is compared with shifted versions of itself, it either correlates perfectly (at zero shift) or maintains a constant correlation at all other shifts.
 
 ```
 Shift 0:  0|0|1|1|1|0|1
@@ -163,3 +161,4 @@ Constant Hamming distance for all non-zero shifts means the second value of the 
 
 1. Menezes, A.J., Van Oorschot, P.C. and Vanstone, S.A. (2018) Handbook of Applied Cryptography. 1st edn. CRC Press. Available at: https://doi.org/10.1201/9780429466335.
 2. Pinaki, M. (no date) ‘Golomb’s Randomness Postulates’. Available at: https://www.iitg.ac.in/pinaki/Golomb.pdf.
+3. Helleseth, T., Kumar, P.V. (1999) “Pseudonoise Sequences” Mobile Communications Handbook Ed. Suthan S. Suthersan Boca Raton: CRC Press LLC
