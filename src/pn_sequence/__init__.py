@@ -92,6 +92,9 @@ def is_pn_sequence(sequence):
         bool: Whether the sequence is a pseudo-noise (pn) sequence.
 
     """
+    if not all(char in '01' for char in sequence):
+        raise ValueError("Input is not a binary sequence")
+
     if is_first_postulate_true(sequence) and is_second_postulate_true(sequence) and is_third_postulate_true(sequence):
         return True
 
