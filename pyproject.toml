@@ -1,6 +1,6 @@
 [project]
 name = "pn-sequence"
-version = "0.1.0"
+version = "0.2.0"
 description = "A library for testing pseudo-noise (PN) sequences."
 authors = [
     {name = "rivst",email = "rivst@posteo.me"}
